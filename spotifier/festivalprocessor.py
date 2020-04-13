@@ -13,10 +13,12 @@ class FestivalProcessor:
             print(str(band_count) + " bands to go...")
             print(band)
             process_band(band, self.year)
-            #sleep(15)
             band_count += 1
 
     def process_band(band, year):
+        """Iterate through the best songs from band before specific date in Spotify's database
+        Stores them in app's DB
+        """
         print("Searching songs for band: " + band)
         songs = self.sp.get_songs_before(band, year) #gets songs from Spotify
         print("Found " + str(len(songs)) + " songs")
@@ -32,6 +34,8 @@ class FestivalProcessor:
 
     #TODO: get the URI source to add to this function
     def add_found_songs_to_playlist(song_list):
+        """Get the list of songs from the playlist from database and sends to spotconnect to save in spotify
+        """
         spotifyURIs = song_list
         request_URIs = []
         request_batch = []
