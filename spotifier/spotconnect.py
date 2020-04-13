@@ -3,7 +3,9 @@ import spotipy.util as util
 
 class Spotifier():
     def create_connection():
-        #TODO: get token and username for user
+        """Connects to spotify using the apps credentials, to query the songs that should be added to the playlist
+        """
+        #TODO: connect to spotify via Client Credentials
         username = "tarrask"
         scope_read = 'user-library-read'
         token_read = util.prompt_for_user_token(username, scope_read, client_id='359147e53bf542949f7bd0edb39278e5',client_secret='23f089c667e14775b5fb7a2b5dd2aac4',redirect_uri='http://localhost/')
@@ -26,6 +28,10 @@ class Spotifier():
         return search_songs
 
     def add_songs_to_playlist(self, playlist_name, spotifyURIs):
+        """Get list of spotify URIs and a playlist name and creates a playlist that is added to a Spotify user's account
+        """
+
+        #TODO implement API authorization here. should use implicit grant
         username = "tarrask"
         scope_create_playlist = "playlist-modify-public"
         token_write_playlists = util.prompt_for_user_token(self.username, scope_create_playlist, client_id='359147e53bf542949f7bd0edb39278e5',client_secret='23f089c667e14775b5fb7a2b5dd2aac4',redirect_uri='http://localhost/')
