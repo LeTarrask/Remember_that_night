@@ -9,4 +9,21 @@
 </h2>
 <p>Create a playlist for your favorite music festival on Spotify, with one click.
 </p>
+<form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.festivalname.label }}<br>
+            {{ form.festivalname(size=32) }}
+        </p>
+        <p>
+            {{ form.festivalyear.label }}<br>
+            {{ form.festivalyear(size=32) }}
+        </p>
+        <p>
+            {{ form.bands.label }}<br>
+            Bands that played in your dream festival. Insert one per line.<br>
+            {{ form.bands }}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
 {% endblock %}
