@@ -8,7 +8,7 @@ class Spotifier():
         #TODO: connect to spotify via Client Credentials
         username = "tarrask"
         scope_read = 'user-library-read'
-        token_read = util.prompt_for_user_token(username, scope_read, client_id='359147e53bf542949f7bd0edb39278e5',client_secret='23f089c667e14775b5fb7a2b5dd2aac4',redirect_uri='http://localhost/')
+        token_read = util.prompt_for_user_token(username, scope_read, client_id='',client_secret='',redirect_uri='http://localhost/')
 
         return spotipy.Spotify(auth=token_read)
 
@@ -34,7 +34,7 @@ class Spotifier():
         #TODO implement API authorization here. should use implicit grant
         username = "tarrask"
         scope_create_playlist = "playlist-modify-public"
-        token_write_playlists = util.prompt_for_user_token(self.username, scope_create_playlist, client_id='359147e53bf542949f7bd0edb39278e5',client_secret='23f089c667e14775b5fb7a2b5dd2aac4',redirect_uri='http://localhost/')
+        token_write_playlists = util.prompt_for_user_token(self.username, scope_create_playlist, client_id='',client_secret='',redirect_uri='http://localhost/')
         connection = spotipy.Spotify(auth=token_write_playlists)
 
         playlist = connection.user_playlist_create(self.username, playlist_name, public=True, description= "teste")
