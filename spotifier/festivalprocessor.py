@@ -18,7 +18,6 @@ class FestivalProcessor:
             self.process_band(band, year)
             band_count += 1
 
-        print(self.bands)
         db.session.commit()
 
     def process_band(self, band, year):
@@ -31,7 +30,6 @@ class FestivalProcessor:
         songs = sp.get_songs_before(band, year) #gets songs from Spotify
 
         for song in songs:
-            print(song)
             song_storage = Song(artist_name = song["artists"][0]["name"],
             song_name = song["name"], album_name = song["album"]["name"],
             release_date = song["album"]["release_date"], popularity = song["popularity"], uri = song["uri"],
