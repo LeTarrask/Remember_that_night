@@ -2,20 +2,15 @@
 
 {% block content %}
 <h1>
-  Remember that night - 
+  Remember that night - {{playlist.name}}
 </h1>
 <h2>
   Garagem Infinita’s Festival Playlist Generator
 </h2>
 <p>Here's the playlist you created:</p>
-{% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-{% endwith %}
+<h3>{{playlist.name}}, {{playlist.year}}</h3>
+{ % for song in playlist.songs % }
+song.name
+{ % endfor % }
 
 {% endblock %}
