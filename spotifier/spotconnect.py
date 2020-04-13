@@ -8,7 +8,7 @@ class Spotifier():
         """
         Connects to spotify using the apps credentials, to query the songs that should be added to the playlist
         """
-        client_credentials_manager = SpotifyClientCredentials()
+        client_credentials_manager = SpotifyClientCredentials('359147e53bf542949f7bd0edb39278e5', '23f089c667e14775b5fb7a2b5dd2aac4')
 
         return spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 

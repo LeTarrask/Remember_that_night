@@ -8,9 +8,8 @@ class FestivalProcessor:
         self.year = year
         self.bands = bands
 
-        self.playlist_storage = Playlist(name=self.festival, year=self.year, bands=",".join(self.bands))
+        self.playlist_storage = Playlist(name=self.festival, year=int(year), bands=", ".join(self.bands))
         db.session.add(self.playlist_storage)
-
 
         band_count = 1
         for band in self.bands:
@@ -19,6 +18,7 @@ class FestivalProcessor:
             self.process_band(band, year)
             band_count += 1
 
+        print(self.bands)
         db.session.commit()
 
     def process_band(self, band, year):
@@ -29,8 +29,6 @@ class FestivalProcessor:
         #Searching songs for band
         sp = spotconnect.Spotifier()
         songs = sp.get_songs_before(band, year) #gets songs from Spotify
-        print("songs: ")
-        print(songs)
 
         for song in songs:
             print(song)
