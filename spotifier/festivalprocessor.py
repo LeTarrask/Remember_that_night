@@ -1,36 +1,44 @@
 from spotifier import spotconnect
+from app.models import Playlist, Song
+from app import db
 
 class FestivalProcessor:
     def __init__(self, festival, year, bands):
-        sp = spotconnect.Spotifier()
         self.festival = festival
         self.year = year
         self.bands = bands
 
-    def process_festival(self):
+        self.playlist_storage = Playlist(name=self.festival, year=self.year, bands=",".join(self.bands))
+        db.session.add(self.playlist_storage)
+
+
         band_count = 1
         for band in self.bands:
             print(str(band_count) + " bands to go...")
             print(band)
-            process_band(band, self.year)
+            self.process_band(band, year)
             band_count += 1
 
-    def process_band(band, year):
-        """Iterate through the best songs from band before specific date in Spotify's database
+        db.session.commit()
+
+    def process_band(self, band, year):
+        """
+        Iterate through the best songs from band before specific date in Spotify's database
         Stores them in app's DB
         """
-        print("Searching songs for band: " + band)
-        songs = self.sp.get_songs_before(band, year) #gets songs from Spotify
-        print("Found " + str(len(songs)) + " songs")
+        #Searching songs for band
+        sp = spotconnect.Spotifier()
+        songs = sp.get_songs_before(band, year) #gets songs from Spotify
+        print("songs: ")
+        print(songs)
 
         for song in songs:
-            print("Song found: " + song["name"])
-            print("Storing song...")
-            print(song["artists"][0]["name"], song["name"], song["album"]["name"], song["album"]["release_date"], song["popularity"], song["uri"], song["external_urls"]["spotify"])
-
-            #TODO: store song into app DB
-            storeSong(page, song["artists"][0]["name"], song["name"], song["album"]["name"], song["album"]["release_date"], song["popularity"], song["uri"], song["external_urls"]["spotify"])
-            print("Done")
+            print(song)
+            song_storage = Song(artist_name = song["artists"][0]["name"],
+            song_name = song["name"], album_name = song["album"]["name"],
+            release_date = song["album"]["release_date"], popularity = song["popularity"], uri = song["uri"],
+            external_urls = song["external_urls"]["spotify"], playlist=self.playlist_storage.id)
+            db.session.add(song_storage)
 
     #TODO: get the URI source to add to this function
     def add_found_songs_to_playlist(song_list):
