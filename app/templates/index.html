@@ -14,15 +14,24 @@
         <p>
             {{ form.festivalname.label }}<br>
             {{ form.festivalname(size=32) }}
+            {% for error in form.festivalname.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ form.festivalyear.label }}<br>
             {{ form.festivalyear(size=32) }}
+            {% for error in form.festivalyear.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>
             {{ form.bands.label }}<br>
             Bands that played in your dream festival. Insert one per line.<br>
             {{ form.bands }}
+            {% for error in form.bands.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
         </p>
         <p>{{ form.submit() }}</p>
     </form>
