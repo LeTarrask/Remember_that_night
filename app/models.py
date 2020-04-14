@@ -14,8 +14,6 @@ class Playlist(db.Model):
 
     def get_songs(self):
         songs = Song.query.filter_by(list=self)
-        for song in songs:
-            print(song)
         return songs
 
 class Song(db.Model):

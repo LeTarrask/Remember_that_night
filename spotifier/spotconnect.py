@@ -22,6 +22,7 @@ class Spotifier():
         connection = self.create_connection()
         result_search = connection.search(q=band_name + " year: 1900-" + str(concert_date), type="track")
         search_songs = []
+        #TODO: maybe this for loop is preventing some bands from being added
         for track in result_search["tracks"]["items"]:
             if track["artists"][0]["name"].lower() == band_name.lower():
                 search_songs.append(track)
