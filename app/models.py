@@ -1,5 +1,7 @@
 from app import db
 
+
+
 class Playlist(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), index=True, unique=False)
@@ -9,6 +11,12 @@ class Playlist(db.Model):
 
     def __repr__(self):
         return '<Playlist {}>'.format(self.name)
+
+    def get_songs(self):
+        songs = Song.query.filter_by(list=self)
+        for song in songs:
+            print(song)
+        return songs
 
 class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True)

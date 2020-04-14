@@ -2,12 +2,19 @@
 
 {% block content %}
 <h1>
-  Remember that night - {{ playlist.festival }}.
+  Remember that night - {{ playlist.name }}.
 </h1>
 <h2>
   Garagem Infinita’s Festival Playlist Generator
 </h2>
 <p>Here's the playlist you created:</p>
-<h3>{{ playlist.festival }}, {{ playlist.year }}</h3>
-{{ playlist.bands }}
+<h3>{{ playlist.name }}, {{ playlist.year }}</h3>
+<h4>{{ playlist.bands }}</h4>
+
+{% for song in songs%}
+<li>
+  {{ song.song_name, song.release_date, song.popularity }}
+</li>
+{% endfor %}
+
 {% endblock %}

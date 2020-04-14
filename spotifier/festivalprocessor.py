@@ -11,12 +11,8 @@ class FestivalProcessor:
         self.playlist_storage = Playlist(name=self.festival, year=int(year), bands=", ".join(self.bands))
         db.session.add(self.playlist_storage)
 
-        band_count = 1
         for band in self.bands:
-            print(str(band_count) + " bands to go...")
-            print(band)
             self.process_band(band, year)
-            band_count += 1
 
         db.session.commit()
 
@@ -33,7 +29,7 @@ class FestivalProcessor:
             song_storage = Song(artist_name = song["artists"][0]["name"],
             song_name = song["name"], album_name = song["album"]["name"],
             release_date = song["album"]["release_date"], popularity = song["popularity"], uri = song["uri"],
-            external_urls = song["external_urls"]["spotify"], playlist=self.playlist_storage.id)
+            external_urls = song["external_urls"]["spotify"], list=self.playlist_storage)
             db.session.add(song_storage)
 
     #TODO: get the URI source to add to this function
