@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, get_flashed_messages
+from flask import render_template, flash, redirect, url_for, get_flashed_messages, request
 from app import app
 from app.forms import PlaylistForm
 from spotifier.festivalprocessor import FestivalProcessor
@@ -19,4 +19,8 @@ def playlist():
 
     processor = FestivalProcessor(data_load[0], data_load[1], data_load[2])
 
-    return render_template("playlist.html", title="Your Playlist", playlist=processor)
+    playlist = processor.playlist_storage
+
+    songs = playlist.get_songs()
+
+    return render_template("playlist.html", title="Your Playlist", playlist=playlist, songs=songs)
