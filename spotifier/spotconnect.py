@@ -1,14 +1,43 @@
 import spotipy
 import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
-
+import requests
 
 class Spotifier():
+    #  Client Keys
+    CLIENT_ID = "359147e53bf542949f7bd0edb39278e5"
+    CLIENT_SECRET = "23f089c667e14775b5fb7a2b5dd2aac4"
+
+    # Spotify URLS
+    SPOTIFY_AUTH_URL = "https://accounts.spotify.com/authorize"
+    SPOTIFY_TOKEN_URL = "https://accounts.spotify.com/api/token"
+    SPOTIFY_API_BASE_URL = "https://api.spotify.com"
+    API_VERSION = "v1"
+    SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
+
+    # Server-side Parameters
+    CLIENT_SIDE_URL = "http://127.0.0.1"
+    PORT = 5000
+    REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
+    SCOPE = "playlist-modify-public playlist-modify-private"
+    STATE = ""
+    SHOW_DIALOG_bool = True
+    SHOW_DIALOG_str = str(SHOW_DIALOG_bool).lower()
+
+    auth_query_parameters = {
+        "response_type": "code",
+        "redirect_uri": REDIRECT_URI,
+        "scope": SCOPE,
+        # "state": STATE,
+        # "show_dialog": SHOW_DIALOG_str,
+        "client_id": CLIENT_ID
+    }
+
     def create_connection(self):
         """
         Connects to spotify using the apps credentials, to query the songs that should be added to the playlist
         """
-        client_credentials_manager = SpotifyClientCredentials('359147e53bf542949f7bd0edb39278e5', '23f089c667e14775b5fb7a2b5dd2aac4')
+        client_credentials_manager = SpotifyClientCredentials(self.CLIENT_ID, self.CLIENT_SECRET)
 
         return spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
@@ -28,17 +57,25 @@ class Spotifier():
                 search_songs.append(track)
         return search_songs
 
-    def add_songs_to_playlist(self, playlist_name, spotifyURIs):
+    def add_songs_to_playlist(self, user, access_token, playlist_name, spotifyURIs):
         """
         Get list of spotify URIs and a playlist name and creates a playlist that is added to a Spotify user's account
         """
 
-        #TODO implement API authorization here. should use implicit grant
-        username = ""
-        scope_create_playlist = "playlist-modify-public"
-        token_write_playlists = util.prompt_for_user_token(self.username, scope_create_playlist, client_id='359147e53bf542949f7bd0edb39278e5',client_secret='23f089c667e14775b5fb7a2b5dd2aac4',redirect_uri='http://localhost/')
-        connection = spotipy.Spotify(auth=token_write_playlists)
+        headers = {
+            'Authorization': f'Bearer {access_token}',
+            'Content-Type': 'application/json',
+        }
 
-        playlist = connection.user_playlist_create(self.username, playlist_name, public=True, description= "teste")
+        #TODO bug is not reading festival name here
+        data = '{"name":"A New Playlist","public":false}'
 
-        connection.user_playlist_add_tracks(self.username, playlist["id"], spotifyURIs)
+        response = requests.post(f'https://api.spotify.com/v1/users/{user}/playlists', headers=headers, data=data)
+
+        print(response.text)
+
+        URIs = ", ".join(spotifyURIs)
+        params = (('uris', f'{URIs}'),)
+
+        response = requests.post('https://api.spotify.com/v1/playlists/7oi0w0SLbJ4YyjrOxhZbUv/tracks', headers=headers, params=params)
+        print(response.text)
