@@ -39,8 +39,7 @@ class Spotifier():
 
     def create_connection(self):
         """
-        Connects to spotify using the apps credentials, to query the songs that
-        should be added to the playlist
+        Connects to spotify using the apps credentials, to query the songs that should be added to the playlist
         """
         client_credentials_manager = SpotifyClientCredentials(self.CLIENT_ID, self.CLIENT_SECRET)
 
