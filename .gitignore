@@ -1,5 +1,6 @@
 # api keys
 .env
+<<<<<<< HEAD
 
 # python files
 .DS_Store
@@ -8,3 +9,5 @@ app/__pycache__/*
 spotifier/__pycache__/*
 **/logs
 venv/
+=======
+>>>>>>> 0ed2dd8721f689b6d0e5e6a18dde397f63ea7336
