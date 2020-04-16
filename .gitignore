@@ -8,3 +8,4 @@ app/__pycache__/*
 spotifier/__pycache__/*
 **/logs
 venv/
+venv
