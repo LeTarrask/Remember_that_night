@@ -7,5 +7,5 @@ __pycache__/
 app/__pycache__/*
 spotifier/__pycache__/*
 **/logs
-venv/
+venv/**
 /venv

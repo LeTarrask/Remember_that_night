@@ -19,6 +19,7 @@ class Spotifier():
     SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
     # Server-side Parameters
+    #this variables could be set to environment
     CLIENT_SIDE_URL = "http://127.0.0.1"
     PORT = 5000
     REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
