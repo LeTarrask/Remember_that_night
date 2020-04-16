@@ -1,10 +1,10 @@
 import spotipy
-import spotipy.util as util
 from spotipy.oauth2 import SpotifyClientCredentials
 import requests
 import json
 from flask import session
 import os
+
 
 class Spotifier():
     #  Client Keys
@@ -19,7 +19,7 @@ class Spotifier():
     SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, API_VERSION)
 
     # Server-side Parameters
-    #this variables could be set to environment
+    # this variables could be set to environment
     CLIENT_SIDE_URL = "http://127.0.0.1"
     PORT = 5000
     REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
@@ -39,7 +39,8 @@ class Spotifier():
 
     def create_connection(self):
         """
-        Connects to spotify using the apps credentials, to query the songs that should be added to the playlist
+        Connects to spotify using the apps credentials, to query the songs that
+        should be added to the playlist
         """
         client_credentials_manager = SpotifyClientCredentials(self.CLIENT_ID, self.CLIENT_SECRET)
 
@@ -55,7 +56,7 @@ class Spotifier():
         connection = self.create_connection()
         result_search = connection.search(q=band_name + " year: 1900-" + str(concert_date), type="track")
         search_songs = []
-        #TODO: maybe this for loop is preventing some bands from being added
+        # TODO: maybe this for loop is preventing some bands from being added
         for track in result_search["tracks"]["items"]:
             if track["artists"][0]["name"].lower() == band_name.lower():
                 search_songs.append(track)
@@ -63,7 +64,8 @@ class Spotifier():
 
     def add_songs_to_playlist(self, auth_token):
         """
-        Get list of spotify URIs and a playlist name and creates a playlist that is added to a Spotify user's account
+        Get list of spotify URIs and a playlist name and creates a playlist
+        that is added to a Spotify user's account
         """
 
         code_payload = {
@@ -90,10 +92,11 @@ class Spotifier():
         profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
         profile_data = json.loads(profile_response.text)
 
-        #TODO: should fix this line to add custom playlist name #session["playlist_name"]
+        # TODO: should fix this line to add custom playlist name
+        # session["playlist_name"]
         data = '{"name":"A New Playlist","public":false}'
 
-        #creates playlist
+        # creates playlist
         playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
         playlists_add = requests.post(playlist_api_endpoint, headers=authorization_header, data=data)
         playlist_data = json.loads(playlists_add.text)
