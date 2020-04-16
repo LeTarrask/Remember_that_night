@@ -7,3 +7,6 @@ class PlaylistForm(FlaskForm):
     festivalyear = StringField('Festival Year', validators=[DataRequired()])
     bands = TextAreaField('Bands', validators=[DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Generate Playlist')
+
+class SendForm(FlaskForm):
+    submit = SubmitField("Send Playlist to Spotify")
