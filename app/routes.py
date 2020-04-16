@@ -15,7 +15,8 @@ def index():
         data_load = [form.festivalname.data, form.festivalyear.data, form.bands.data.splitlines()]
         flash(data_load)
         return redirect(url_for("playlist"))
-    return render_template("index.html", title="Remember that night", form = form)
+    return render_template("index.html", title="Remember that night", form=form)
+
 
 @app.route("/playlist", methods=['GET', 'POST'])
 def playlist():
@@ -41,6 +42,7 @@ def playlist():
     elif request.method == "POST":
         return redirect(url_for("authorize"))
 
+
 @app.route("/authorize")
 def authorize():
     # Auth Step 1: Authorization
@@ -49,13 +51,15 @@ def authorize():
     auth_url = "{}/?{}".format(sp.SPOTIFY_AUTH_URL, url_args)
     return redirect(auth_url)
 
+
 @app.route("/callback/q")
 def callback():
     sp = Spotifier()
     # Auth Step 4: Requests refresh and access tokens
     auth_token = request.args['code']
 
-    #Send auth_token to Spotify Connect and process playlist and songs, returning the info that should be displayed on page
+    # Send auth_token to Spotify Connect and process playlist and songs,
+    # returning the info that should be displayed on page
     songs_data = sp.add_songs_to_playlist(auth_token)
 
     return render_template("spotify.html", sorted_array=songs_data)
