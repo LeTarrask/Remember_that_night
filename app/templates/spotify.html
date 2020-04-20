@@ -1,4 +1,14 @@
-<doctype html>
-<html>
-	<p> {{ sorted_array }} </p>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<h1>
+  Remember that night - {{ playlist_data["name"] }}.
+</h1>
+<h2>
+  Garagem Infinita’s Festival Playlist Generator
+</h2>
+<p>Here's the playlist you created:</p>
+
+<p> <a href={{ playlist_data["external_urls"]["spotify"] }}>{{ playlist_data["name"] }}</a> </p>
+
+{% endblock %}

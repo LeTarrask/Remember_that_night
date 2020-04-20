@@ -39,7 +39,8 @@ class Spotifier():
 
     def create_connection(self):
         """
-        Connects to spotify using the apps credentials, to query the songs that should be added to the playlist
+        Connects to spotify using the apps credentials, to query
+        the songs that should be added to the playlist
         """
         client_credentials_manager = SpotifyClientCredentials(self.CLIENT_ID, self.CLIENT_SECRET)
 
@@ -79,9 +80,9 @@ class Spotifier():
         # Auth Step 5: Tokens are Returned to Application
         response_data = json.loads(post_request.text)
         access_token = response_data["access_token"]
-        refresh_token = response_data["refresh_token"]
-        token_type = response_data["token_type"]
-        expires_in = response_data["expires_in"]
+        # refresh_token = response_data["refresh_token"]
+        # token_type = response_data["token_type"]
+        # expires_in = response_data["expires_in"]
 
         # Auth Step 6: Use the access token to access Spotify API
         authorization_header = {"Authorization": "Bearer {}".format(access_token)}
@@ -111,4 +112,4 @@ class Spotifier():
         print(songs_add)
         songs_data = json.loads(songs_add.text)
 
-        return songs_data
+        return playlist_data

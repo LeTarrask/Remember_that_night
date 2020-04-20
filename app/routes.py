@@ -60,6 +60,6 @@ def callback():
 
     # Send auth_token to Spotify Connect and process playlist and songs,
     # returning the info that should be displayed on page
-    songs_data = sp.add_songs_to_playlist(auth_token)
+    playlist_data = sp.add_songs_to_playlist(auth_token)
 
-    return render_template("spotify.html", sorted_array=songs_data)
+    return render_template("spotify.html", playlist_data=playlist_data)
