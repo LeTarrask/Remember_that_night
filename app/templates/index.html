@@ -1,38 +1,60 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>
-  Remember that night
-</h1>
-<h2>
-  Garagem Infinita’s Festival Playlist Generator
-</h2>
-<p>Create a playlist for your favorite music festival on Spotify, with one click.
-</p>
-<form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.festivalname.label }}<br>
-            {{ form.festivalname(size=32) }}
-            {% for error in form.festivalname.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
+
+<!-- Masthead -->
+<header class="masthead text-white text-center">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-9 mx-auto">
+        <h1 class="mb-5">Garagem Infinita’s Festival Playlist Generator</h1>
+        <p>Create a playlist for your favorite music festival on Spotify, with one click.
         </p>
-        <p>
-            {{ form.festivalyear.label }}<br>
-            {{ form.festivalyear(size=32) }}
-            {% for error in form.festivalyear.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.bands.label }}<br>
-            Bands that played in your dream festival. Insert one per line.<br>
-            {{ form.bands }}
-            {% for error in form.bands.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+      </div>
+      <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+        <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <div class="form-row">
+                    <h3>
+                      {{ form.festivalname.label }}
+                    </h3>
+                </div>
+                <div class="form-row">
+                    {{ form.festivalname(size=78) }}
+                    {% for error in form.festivalname.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="form-row">
+                    <h3>
+                      {{ form.festivalyear.label }}
+                    </h3>
+                </div>
+                <div class="form-row">
+                    {{ form.festivalyear(size=78) }}
+                    {% for error in form.festivalyear.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="form-row">
+                    <h3>
+                      {{ form.bands.label }}
+                    </h3>
+                </div>
+                <div class="form-row">
+                    List the bands that played in your dream festival. Insert one per line.
+                    {{ form.bands(cols=100, rows=10) }}
+                    {% for error in form.bands.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+                <div class="form-row">
+                      <button type="submit" class="btn btn-block btn-lg btn-primary"> {{ form.submit() }} </button>
+                </div>
+            </form>
+      </div>
+    </div>
+  </div>
+</header>
 {% endblock %}
