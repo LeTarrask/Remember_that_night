@@ -92,7 +92,6 @@ class Spotifier():
         profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
         profile_data = json.loads(profile_response.text)
 
-        # TODO: should fix this line to add custom playlist name
         data = '{"name": "' + session["playlist_name"] + '", "public": false}'
 
         # creates playlist
