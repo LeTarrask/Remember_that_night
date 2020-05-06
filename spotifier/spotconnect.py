@@ -93,8 +93,7 @@ class Spotifier():
         profile_data = json.loads(profile_response.text)
 
         # TODO: should fix this line to add custom playlist name
-        # session["playlist_name"]
-        data = '{"name":"A New Playlist","public":false}'
+        data = '{"name": "' + session["playlist_name"] + '", "public": false}'
 
         # creates playlist
         playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
