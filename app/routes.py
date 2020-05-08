@@ -1,9 +1,9 @@
-from flask import render_template, flash, redirect, url_for, get_flashed_messages, request, session
+from flask import (render_template, flash, redirect, url_for,
+                   get_flashed_messages, request, session)
 from app import app
 from app.forms import PlaylistForm, SendForm
 from spotifier.festivalprocessor import FestivalProcessor
 from spotifier.spotconnect import Spotifier
-import requests
 from urllib.parse import quote
 
 
@@ -12,10 +12,12 @@ from urllib.parse import quote
 def index():
     form = PlaylistForm()
     if form.validate_on_submit():
-        data_load = [form.festivalname.data, form.festivalyear.data, form.bands.data.splitlines()]
+        data_load = [form.festivalname.data, form.festivalyear.data,
+                     form.bands.data.splitlines()]
         flash(data_load)
         return redirect(url_for("playlist"))
-    return render_template("index.html", title="Remember that night", form=form)
+    return render_template("index.html", title="Remember that night",
+                           form=form)
 
 
 @app.route("/playlist", methods=['GET', 'POST'])
@@ -37,7 +39,8 @@ def playlist():
             songURIs.append(song.uri)
         session["songs"] = songURIs
 
-        return render_template("playlist.html", title="Your Playlist", playlist=playlist, songs=songs, form=form)
+        return render_template("playlist.html", title="Your Playlist",
+                               playlist=playlist, songs=songs, form=form)
 
     elif request.method == "POST":
         return redirect(url_for("authorize"))
@@ -47,7 +50,8 @@ def playlist():
 def authorize():
     # Auth Step 1: Authorization
     sp = Spotifier()
-    url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in sp.auth_query_parameters.items()])
+    url_args = "&".join(["{}={}".format(key, quote(val)) for key, val in
+                        sp.auth_query_parameters.items()])
     auth_url = "{}/?{}".format(sp.SPOTIFY_AUTH_URL, url_args)
     return redirect(auth_url)
 
