@@ -42,9 +42,12 @@ class Spotifier():
         Connects to spotify using the apps credentials, to query
         the songs that should be added to the playlist
         """
-        client_credentials_manager = SpotifyClientCredentials(self.CLIENT_ID, self.CLIENT_SECRET)
+        client_credentials_manager = SpotifyClientCredentials(
+                                    self.CLIENT_ID,
+                                    self.CLIENT_SECRET)
 
-        return spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+        return spotipy.Spotify(
+            client_credentials_manager=client_credentials_manager)
 
     def get_songs_before(self, band_name, concert_date):
         """
@@ -54,8 +57,11 @@ class Spotifier():
         """
 
         connection = self.create_connection()
-        result_search = connection.search(q=band_name + " year: 1900-" + str(concert_date), type="track")
+        result_search = connection.search(q=band_name +
+                                          " year: 1900-" + str(concert_date),
+                                          type="track")
         search_songs = []
+
         # TODO: maybe this for loop is preventing some bands from being added
         for track in result_search["tracks"]["items"]:
             if track["artists"][0]["name"].lower() == band_name.lower():
@@ -85,18 +91,23 @@ class Spotifier():
         # expires_in = response_data["expires_in"]
 
         # Auth Step 6: Use the access token to access Spotify API
-        authorization_header = {"Authorization": "Bearer {}".format(access_token)}
+        authorization_header = {
+            "Authorization": "Bearer {}".format(access_token)
+                                }
 
         # Get profile data
         user_profile_api_endpoint = "{}/me".format(self.SPOTIFY_API_URL)
-        profile_response = requests.get(user_profile_api_endpoint, headers=authorization_header)
+        profile_response = requests.get(user_profile_api_endpoint,
+                                        headers=authorization_header)
         profile_data = json.loads(profile_response.text)
 
         data = '{"name": "' + session["playlist_name"] + '", "public": false}'
 
         # creates playlist
         playlist_api_endpoint = "{}/playlists".format(profile_data["href"])
-        playlists_add = requests.post(playlist_api_endpoint, headers=authorization_header, data=data)
+        playlists_add = requests.post(playlist_api_endpoint,
+                                      headers=authorization_header,
+                                      data=data)
         playlist_data = json.loads(playlists_add.text)
 
         # Get created playlist data
@@ -106,8 +117,9 @@ class Spotifier():
         URIs = ",".join(session.get("songs", None))
         params = (('uris', f'{URIs}'),)
 
-        songs_add = requests.post("https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id), headers=authorization_header, params=params)
+        songs_add = requests.post(
+            "https://api.spotify.com/v1/playlists/{}/tracks".format(playlist_id),
+            headers=authorization_header, params=params)
         print(songs_add)
-        songs_data = json.loads(songs_add.text)
 
         return playlist_data

@@ -9,7 +9,9 @@ class FestivalProcessor:
         self.year = year
         self.bands = bands
 
-        self.playlist_storage = Playlist(name=self.festival, year=int(year), bands=", ".join(self.bands))
+        self.playlist_storage = Playlist(name=self.festival,
+                                         year=int(year),
+                                         bands=", ".join(self.bands))
         db.session.add(self.playlist_storage)
 
         for band in self.bands:
@@ -28,8 +30,12 @@ class FestivalProcessor:
         songs = sp.get_songs_before(band, year)  # gets songs from Spotify
 
         for song in songs:
-            song_storage=Song(artist_name=song["artists"][0]["name"],
-            song_name=song["name"], album_name=song["album"]["name"],
-            release_date=song["album"]["release_date"], popularity=song["popularity"], uri=song["uri"],
-            external_urls=song["external_urls"]["spotify"], list=self.playlist_storage)
+            song_storage = Song(artist_name=song["artists"][0]["name"],
+                                song_name=song["name"],
+                                album_name=song["album"]["name"],
+                                release_date=song["album"]["release_date"],
+                                popularity=song["popularity"],
+                                uri=song["uri"],
+                                external_urls=song["external_urls"]["spotify"],
+                                list=self.playlist_storage)
             db.session.add(song_storage)
