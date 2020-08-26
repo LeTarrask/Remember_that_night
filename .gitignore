@@ -9,3 +9,6 @@ spotifier/__pycache__/*
 **/logs
 venv/**
 /venv
+
+# project notes
+howto.txt
